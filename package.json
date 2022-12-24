@@ -4,7 +4,7 @@
   "description": "Attempts at Advent of Code 2022 by TheHungryTurnip",
   "main": "index.js",
   "scripts": {
-    "test": "prettier --check . && eslint . && ./01.ts && ./02.ts"
+    "test": "prettier --check . && eslint . && src/01.ts && src/02.ts"
   },
   "repository": {
     "type": "git",
