@@ -3,15 +3,26 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["airbnb-base", "prettier"],
+  extends: ["airbnb-typescript/base", "prettier"],
   overrides: [],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
+    project: "./tsconfig.json",
   },
   rules: {
     "prettier/prettier": "error",
     "no-console": "off",
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        js: "never",
+        jsx: "never",
+        ts: "never",
+        tsx: "never",
+      },
+    ],
   },
-  plugins: ["prettier"],
+  plugins: ["prettier", "import", "n", "promise"],
 };

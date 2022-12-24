@@ -4,7 +4,7 @@
   "description": "Attempts at Advent of Code 2022 by TheHungryTurnip",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky install"
+    "test": "prettier --check . && eslint ."
   },
   "repository": {
     "type": "git",
@@ -19,16 +19,16 @@
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "eslint": "^8.30.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
-    "typescript": "^4.9.4",
-    "husky": "^8.0.0"
+    "typescript": "^4.9.4"
   },
   "lint-staged": {
     "*.ts": "npx tsc --noEmit",
