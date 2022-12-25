@@ -11,6 +11,7 @@ it.each([
   [3, 1, 7701, day03.dupSum],
   [3, 2, 2644, day03.badgeSum],
   [4, 1, 477, day04.coversCount],
+  [4, 2, 830, day04.overlapCount],
 ])(
   "For day %p part %p. Expect %p.",
   (day: number, part: number, answer: number, actual: number) => {
