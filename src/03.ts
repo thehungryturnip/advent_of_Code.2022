@@ -30,5 +30,5 @@ const dups = bagCompPris.map((pris) => {
   }
   return 0;
 });
-const dupSum = dups.reduce((sum, n) => sum + n, 0);
+export const dupSum = dups.reduce((sum, n) => sum + n, 0);
 console.log(`Day 03 Part 1: The priority sum is ${dupSum}.`);

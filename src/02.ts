@@ -19,7 +19,7 @@ const scoreTable: Record<string, number> = {
 const data = utils.readFile(2);
 const rounds = data.split("\n");
 const scores = rounds.map((round) => scoreTable[round]);
-const score = utils.sumArray(scores);
+export const score = utils.sumArray(scores);
 console.log(`Day 02 Part 1: Total score is ${score}.`);
 
 // A: Rock
@@ -42,5 +42,5 @@ const scoreTable2: Record<string, number> = {
 };
 
 const scores2 = rounds.map((round) => scoreTable2[round]);
-const score2 = utils.sumArray(scores2);
+export const score2 = utils.sumArray(scores2);
 console.log(`Day 02 Part 2: Total score is ${score2}.`);

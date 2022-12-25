@@ -4,7 +4,7 @@
   "description": "Attempts at Advent of Code 2022 by TheHungryTurnip",
   "main": "index.js",
   "scripts": {
-    "test": "prettier --check . && eslint . && ts-node src/01.ts && ts-node src/02.ts && ts-node src/03.ts",
+    "test": "jest && prettier --check . && eslint .",
     "exec": "ts-node"
   },
   "repository": {
@@ -17,6 +17,7 @@
     "ts-node": "^10.9.1"
   },
   "devDependencies": {
+    "@types/jest": "^29.2.4",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "eslint": "^8.30.0",
@@ -27,8 +28,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.0",
+    "jest": "^29.3.1",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
+    "ts-jest": "^29.0.3",
     "typescript": "^4.9.4"
   },
   "lint-staged": {
