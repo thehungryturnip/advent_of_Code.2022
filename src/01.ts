@@ -1,5 +1,3 @@
-#!/usr/bin/env ts-node-esm
-
 import * as utils from "./lib/utils";
 
 const getElves = (data: string) =>
