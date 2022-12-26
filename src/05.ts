@@ -23,6 +23,10 @@ class CargoBay {
     }
   };
 
+  clearCrates = () => {
+    this.crates = [...Array(9)].map(() => []);
+  };
+
   setMoves = (data: string[]) => {
     this.moves = data
       .map((line) => line.match(/^move (\d+) from (\d) to (\d)$/))
@@ -33,13 +37,17 @@ class CargoBay {
       }));
   };
 
-  execMoves = () =>
+  execMoves = (newModel = false) =>
     this.moves.forEach(({ count, from, to }) => {
       const toMove = this.crates[from - 1].splice(
         this.crates[from - 1].length - count,
         count
       );
-      this.crates[to - 1].push(...toMove.reverse());
+      if (newModel) {
+        this.crates[to - 1].push(...toMove);
+      } else {
+        this.crates[to - 1].push(...toMove.reverse());
+      }
     });
 
   getTopCrates = (): string =>
@@ -60,4 +68,10 @@ bay.setCrates(crateData);
 bay.setMoves(moveData);
 bay.execMoves();
 export const topCrates = bay.getTopCrates();
-console.log(`Day 05 Part 1: The top crates are ${topCrates}.`);
+console.log(`Day 05 Part 1: The top crates for 9000 are ${topCrates}.`);
+
+bay.clearCrates();
+bay.setCrates(crateData);
+bay.execMoves(true);
+export const newTopCrates = bay.getTopCrates();
+console.log(`Day 05 Part 2: The top crates for 9001 are ${newTopCrates}.`);
