@@ -3,6 +3,7 @@ import * as day02 from "../src/02";
 import * as day03 from "../src/03";
 import * as day04 from "../src/04";
 import * as day05 from "../src/05";
+import * as day06 from "../src/06";
 
 it.each([
   [1, 1, 72017, day01.theMost],
@@ -15,6 +16,7 @@ it.each([
   [4, 2, 830, day04.overlapCount],
   [5, 1, "TBVFVDZPN", day05.topCrates],
   [5, 2, "VLCWHTDSZ", day05.newTopCrates],
+  [6, 1, 1210, day06.markerPos],
 ])(
   "For day %p part %p. Expect %p.",
   (
