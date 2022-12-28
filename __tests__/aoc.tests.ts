@@ -16,7 +16,8 @@ it.each([
   [4, 2, 830, day04.overlapCount],
   [5, 1, "TBVFVDZPN", day05.topCrates],
   [5, 2, "VLCWHTDSZ", day05.newTopCrates],
-  [6, 1, 1210, day06.markerPos],
+  [6, 1, 1210, day06.start],
+  [6, 2, 3476, day06.message],
 ])(
   "For day %p part %p. Expect %p.",
   (

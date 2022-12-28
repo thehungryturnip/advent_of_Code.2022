@@ -1,9 +1,9 @@
 import * as utils from "./lib/utils";
 
-const findMarker = (buffer: string): number => {
-  for (let i = 4; i <= buffer.length; i++) {
-    const marker = new Set<string>(buffer.slice(i - 4, i));
-    if (marker.size === 4) {
+const findMarker = (buffer: string, len: number): number => {
+  for (let i = len; i <= buffer.length; i++) {
+    const marker = new Set<string>(buffer.slice(i - len, i));
+    if (marker.size === len) {
       return i;
     }
   }
@@ -14,6 +14,10 @@ const data = utils
   .readFile(6)
   .split("\n")
   .filter((s) => s !== "");
-const markerPoss = data.map((entry: string) => findMarker(entry));
-export const markerPos = markerPoss[0];
-console.log(`Day 06 Part 1: The marker is at position ${markerPos}`);
+const starts = data.map((entry: string) => findMarker(entry, 4));
+export const start = starts[0];
+console.log(`Day 06 Part 1: The start marker is at position ${start}`);
+
+const messages = data.map((entry: string) => findMarker(entry, 14));
+export const message = messages[0];
+console.log(`Day 06 Part 2: The message marker is at position ${message}`);
