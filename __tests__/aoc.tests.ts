@@ -4,6 +4,7 @@ import * as day03 from "../src/03";
 import * as day04 from "../src/04";
 import * as day05 from "../src/05";
 import * as day06 from "../src/06";
+import * as day07 from "../src/07";
 
 it.each([
   [1, 1, 72017, day01.theMost],
@@ -18,6 +19,7 @@ it.each([
   [5, 2, "VLCWHTDSZ", day05.newTopCrates],
   [6, 1, 1210, day06.start],
   [6, 2, 3476, day06.message],
+  [7, 1, 1432936, day07.dirSum],
 ])(
   "For day %p part %p. Expect %p.",
   (
