@@ -76,12 +76,12 @@ class FileSystem {
   };
 
   calcDirSize = (dir: Directory): number => {
-    const fileSize = Object.entries(dir.files)
-      .map((file) => file[1].size)
-      .reduce((sum, size) => (sum += size), 0);
-    const dirSize = Object.entries(dir.dirs)
-      .map((record) => this.calcDirSize(record[1]))
-      .reduce((sum, size) => (sum += size), 0);
+    const fileSize = utils.sumArray(
+      Object.entries(dir.files).map((file) => file[1].size)
+    );
+    const dirSize = utils.sumArray(
+      Object.entries(dir.dirs).map((record) => this.calcDirSize(record[1]))
+    );
     return fileSize + dirSize;
   };
 
@@ -89,17 +89,14 @@ class FileSystem {
     const dirs = this.getDirs();
     const dirSizes = dirs.map((dir) => this.calcDirSize(dir));
     const underSizes = dirSizes.filter((size) => size <= under);
-    return underSizes.reduce((sum, size) => sum + size, 0);
+    return utils.sumArray(underSizes);
   };
 
   minGreaterThanSize = (greaterThan: number): number => {
     const dirs = this.getDirs();
     const dirSizes = dirs.map((dir) => this.calcDirSize(dir));
     const largeEnough = dirSizes.filter((size) => size >= greaterThan);
-    return largeEnough.reduce(
-      (min, size) => (min < size ? min : size),
-      Number.MAX_SAFE_INTEGER
-    );
+    return utils.minArray(largeEnough);
   };
 }
 

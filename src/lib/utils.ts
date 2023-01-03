@@ -8,3 +8,12 @@ export const readFile = (day: number, example: boolean = false): string => {
 
 export const sumArray = (array: number[]) =>
   array.reduce((sum, n) => sum + n, 0);
+
+export const countTrueArray = (array: boolean[]) =>
+  array.reduce((sum, val) => (sum += val ? 1 : 0), 0);
+
+export const minArray = (array: number[]) =>
+  array.reduce(
+    (min, size) => (min < size ? min : size),
+    Number.MAX_SAFE_INTEGER
+  );

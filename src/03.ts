@@ -31,7 +31,7 @@ const bagCompPris = bagPris.map((s) => {
 });
 const dups = bagCompPris.map((pris) => findCommon(pris[0], pris[1])[0]);
 
-export const dupSum = dups.reduce((sum, n) => sum + n, 0);
+export const dupSum = utils.sumArray(dups);
 console.log(`Day 03 Part 1: The priority sum is ${dupSum}.`);
 
 const groups = [];
@@ -42,5 +42,5 @@ for (let i = 0; i < bagPris.length; i += 3) {
 const badges = groups.map(
   (group) => findCommon(findCommon(group[0], group[1]), group[2])[0]
 );
-export const badgeSum = badges.reduce((sum, n) => sum + n, 0);
+export const badgeSum = utils.sumArray(badges);
 console.log(`Day 03 Part 2: The badge sum is ${badgeSum}.`);

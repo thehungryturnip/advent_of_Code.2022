@@ -31,16 +31,13 @@ const entries = data.map((line) =>
   line.split(",").map((range) => rangeStartEnd(range))
 );
 const covers = entries.map((entry) => rangeCovers(entry[0], entry[1]));
-export const coversCount = covers.reduce((sum, val) => (sum += val ? 1 : 0), 0);
+export const coversCount = utils.countTrueArray(covers);
 console.log(
   `Day 04 Part 1: The number of pairs that fully covers each other is ${coversCount}.`
 );
 
 const overlaps = entries.map((entry) => rangeOverlaps(entry[0], entry[1]));
-export const overlapCount = overlaps.reduce(
-  (sum, val) => (sum += val ? 1 : 0),
-  0
-);
+export const overlapCount = utils.countTrueArray(overlaps);
 console.log(
   `Day 04 Part 2: The number of pairs that overlap each other is ${overlapCount}.`
 );
