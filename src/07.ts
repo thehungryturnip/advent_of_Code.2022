@@ -63,6 +63,18 @@ class FileSystem {
     });
   };
 
+  getDirs = (): Directory[] => {
+    const dirs: Directory[] = [];
+    const toCheck = [this.root];
+    while (toCheck.length > 0) {
+      const dir = toCheck.pop();
+      dirs.push(dir!);
+      const children = Object.entries(dir!.dirs).map((record) => record[1]);
+      toCheck.push(...children);
+    }
+    return dirs;
+  };
+
   calcDirSize = (dir: Directory): number => {
     const fileSize = Object.entries(dir.files)
       .map((file) => file[1].size)
@@ -74,18 +86,20 @@ class FileSystem {
   };
 
   sumDirSize = (under: number): number => {
-    let dirSize = 0;
-    const toCheck = [this.root];
-    while (toCheck.length > 0) {
-      const dir = toCheck.pop();
-      const dirs = Object.entries(dir!.dirs).map((record) => record[1]);
-      toCheck.push(...dirs);
-      const size = this.calcDirSize(dir!);
-      if (size <= under) {
-        dirSize += size;
-      }
-    }
-    return dirSize;
+    const dirs = this.getDirs();
+    const dirSizes = dirs.map((dir) => this.calcDirSize(dir));
+    const underSizes = dirSizes.filter((size) => size <= under);
+    return underSizes.reduce((sum, size) => sum + size, 0);
+  };
+
+  minGreaterThanSize = (greaterThan: number): number => {
+    const dirs = this.getDirs();
+    const dirSizes = dirs.map((dir) => this.calcDirSize(dir));
+    const largeEnough = dirSizes.filter((size) => size >= greaterThan);
+    return largeEnough.reduce(
+      (min, size) => (min < size ? min : size),
+      Number.MAX_SAFE_INTEGER
+    );
   };
 }
 
@@ -100,3 +114,10 @@ const sys = new FileSystem();
 data.forEach((entry) => sys.processEntry(entry));
 export const dirSum = sys.sumDirSize(100000);
 console.log(`Day 07 Part 1: The sum of directories under 10000 is ${dirSum}.`);
+
+const rootSize = sys.calcDirSize(sys.root);
+const neededSpace = 30000000 - (70000000 - rootSize);
+export const sizeToDelete = sys.minGreaterThanSize(neededSpace);
+console.log(
+  `Day 07 Part 2: The size of the directory to be deleted is ${sizeToDelete}`
+);

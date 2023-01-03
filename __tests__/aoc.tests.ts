@@ -20,6 +20,7 @@ it.each([
   [6, 1, 1210, day06.start],
   [6, 2, 3476, day06.message],
   [7, 1, 1432936, day07.dirSum],
+  [7, 2, 272298, day07.sizeToDelete],
 ])(
   "For day %p part %p. Expect %p.",
   (
