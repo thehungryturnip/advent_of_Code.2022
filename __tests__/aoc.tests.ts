@@ -23,6 +23,7 @@ it.each([
   [7, 1, 1432936, day07.dirSum],
   [7, 2, 272298, day07.sizeToDelete],
   [8, 1, 1816, day08.visible],
+  [8, 2, 383520, day08.bestScene],
 ])(
   "For day %p part %p. Expect %p.",
   (
