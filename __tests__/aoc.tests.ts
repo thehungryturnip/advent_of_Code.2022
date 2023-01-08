@@ -7,6 +7,7 @@ import * as day06 from "../src/06";
 import * as day07 from "../src/07";
 import * as day08 from "../src/08";
 import * as day09 from "../src/09";
+import * as day10 from "../src/10";
 
 it.each([
   [1, 1, 72017, day01.theMost],
@@ -27,6 +28,7 @@ it.each([
   [8, 2, 383520, day08.bestScene],
   [9, 1, 6503, day09.visited],
   [9, 2, 2724, day09.longerVisited],
+  [10, 1, 11820, day10.sigStrength],
 ])(
   "For day %p part %p. Expect %p.",
   (
