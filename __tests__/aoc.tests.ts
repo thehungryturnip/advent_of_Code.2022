@@ -26,6 +26,7 @@ it.each([
   [8, 1, 1816, day08.visible],
   [8, 2, 383520, day08.bestScene],
   [9, 1, 6503, day09.visited],
+  [9, 2, 2724, day09.longerVisited],
 ])(
   "For day %p part %p. Expect %p.",
   (

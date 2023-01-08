@@ -27,63 +27,87 @@ class Coord {
 }
 
 class StringMap {
-  head: Coord = new Coord(0, 0);
+  rope: Coord[];
 
-  tail: Coord = new Coord(0, 0);
+  history: Set<string>;
 
-  history: Set<string> = new Set<string>([this.tail.key()]);
+  constructor(length: number) {
+    this.rope = [];
+    for (let i = 0; i < length; i++) {
+      this.rope.push(new Coord(0, 0));
+    }
+    this.history = new Set<string>([this.rope[this.rope.length - 1].key()]);
+  }
 
   move = (move: Move) => {
     for (let i = 0; i < move[1]; i++) {
       this.moveHead(move[0]);
-      this.moveTail();
+      this.moveBody();
     }
   };
 
   moveHead = (move: string) => {
     switch (move) {
       case "R":
-        this.head.add(new Coord(0, 1));
+        this.rope[0].add(new Coord(0, 1));
         break;
       case "L":
-        this.head.add(new Coord(0, -1));
+        this.rope[0].add(new Coord(0, -1));
         break;
       case "U":
-        this.head.add(new Coord(-1, 0));
+        this.rope[0].add(new Coord(-1, 0));
         break;
       case "D":
-        this.head.add(new Coord(1, 0));
+        this.rope[0].add(new Coord(1, 0));
     }
   };
 
-  moveTail = () => {
-    const diff = this.tail.diff(this.head);
-    if (diff.equals(new Coord(2, 0))) {
-      this.tail.add(new Coord(1, 0));
-    }
-    if (diff.equals(new Coord(-2, 0))) {
-      this.tail.add(new Coord(-1, 0));
-    }
-    if (diff.equals(new Coord(0, 2))) {
-      this.tail.add(new Coord(0, 1));
-    }
-    if (diff.equals(new Coord(0, -2))) {
-      this.tail.add(new Coord(0, -1));
-    }
-    if (diff.equals(new Coord(2, 1)) || diff.equals(new Coord(1, 2))) {
-      this.tail.add(new Coord(1, 1));
-    }
-    if (diff.equals(new Coord(2, -1)) || diff.equals(new Coord(1, -2))) {
-      this.tail.add(new Coord(1, -1));
-    }
-    if (diff.equals(new Coord(-2, 1)) || diff.equals(new Coord(-1, 2))) {
-      this.tail.add(new Coord(-1, 1));
-    }
-    if (diff.equals(new Coord(-2, -1)) || diff.equals(new Coord(-1, -2))) {
-      this.tail.add(new Coord(-1, -1));
+  moveBody = () => {
+    for (let i = 1; i < this.rope.length; i++) {
+      const diff = this.rope[i].diff(this.rope[i - 1]);
+      if (diff.equals(new Coord(2, 0))) {
+        this.rope[i].add(new Coord(1, 0));
+      }
+      if (diff.equals(new Coord(-2, 0))) {
+        this.rope[i].add(new Coord(-1, 0));
+      }
+      if (diff.equals(new Coord(0, 2))) {
+        this.rope[i].add(new Coord(0, 1));
+      }
+      if (diff.equals(new Coord(0, -2))) {
+        this.rope[i].add(new Coord(0, -1));
+      }
+      if (
+        diff.equals(new Coord(2, 1)) ||
+        diff.equals(new Coord(1, 2)) ||
+        diff.equals(new Coord(2, 2))
+      ) {
+        this.rope[i].add(new Coord(1, 1));
+      }
+      if (
+        diff.equals(new Coord(2, -1)) ||
+        diff.equals(new Coord(1, -2)) ||
+        diff.equals(new Coord(2, -2))
+      ) {
+        this.rope[i].add(new Coord(1, -1));
+      }
+      if (
+        diff.equals(new Coord(-2, 1)) ||
+        diff.equals(new Coord(-1, 2)) ||
+        diff.equals(new Coord(-2, 2))
+      ) {
+        this.rope[i].add(new Coord(-1, 1));
+      }
+      if (
+        diff.equals(new Coord(-2, -1)) ||
+        diff.equals(new Coord(-1, -2)) ||
+        diff.equals(new Coord(-2, -2))
+      ) {
+        this.rope[i].add(new Coord(-1, -1));
+      }
     }
 
-    const historyStr = this.tail.key();
+    const historyStr = this.rope[this.rope.length - 1].key();
     if (!this.history.has(historyStr)) {
       this.history.add(historyStr);
     }
@@ -96,7 +120,14 @@ const data = utils
   .filter((line) => line != "")
   .map((line) => line.split(" ") as Move);
 
-const stringMap = new StringMap();
+const stringMap = new StringMap(2);
 data.forEach((move) => stringMap.move(move));
 export const visited = stringMap.history.size;
 console.log(`Day 09 Part 1: The number of positions visited is ${visited}`);
+
+const longerStringMap = new StringMap(10);
+data.forEach((move) => longerStringMap.move(move));
+export const longerVisited = longerStringMap.history.size;
+console.log(
+  `Day 09 Part 2: The number of positions visited for the longer string is ${longerVisited}`
+);
