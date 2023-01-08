@@ -2,8 +2,10 @@ import * as utils from "./lib/utils";
 
 type Instruction = [string, number];
 
-class Processor {
+class CommSystem {
   reg: number[] = [1];
+
+  disp: string = "";
 
   exec = (ins: Instruction) => {
     switch (ins[0]) {
@@ -16,6 +18,20 @@ class Processor {
         break;
     }
   };
+
+  generateDisplay = () => {
+    const pixels: string[][] = [...Array(6)].map(() => new Array(40).fill("."));
+
+    this.reg.forEach((val, cycle) => {
+      const col = cycle % 40;
+      const row = Math.floor(cycle / 40) % 6;
+      if ([-1, 0, 1].includes(val - col)) {
+        pixels[row][col] = "#";
+      }
+    });
+
+    this.disp = pixels.map((line) => line.join("")).join("\n");
+  };
 }
 
 const data = utils
@@ -24,10 +40,10 @@ const data = utils
   .filter((line) => line != "")
   .map((line) => line.split(" ") as Instruction);
 
-const cpu = new Processor();
-data.forEach((ins) => cpu.exec(ins));
+const sys = new CommSystem();
+data.forEach((ins) => sys.exec(ins));
 export const sigStrength = utils.arraySum(
-  cpu.reg.map((val, cycle) => {
+  sys.reg.map((val, cycle) => {
     if ([20, 60, 100, 140, 180, 220].includes(cycle + 1)) {
       return (cycle + 1) * val;
     }
@@ -37,3 +53,8 @@ export const sigStrength = utils.arraySum(
 console.log(
   `Day 10 Part 1: The sum of the 6 signal strengths is ${sigStrength}`
 );
+
+sys.generateDisplay();
+console.log(`CRT:\n${sys.disp}`);
+export const letters = "EPJBRKAH";
+console.log(`Day 10 Part 2: The CRT shows ${letters}`);

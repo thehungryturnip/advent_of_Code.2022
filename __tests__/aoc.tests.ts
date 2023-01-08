@@ -29,6 +29,7 @@ it.each([
   [9, 1, 6503, day09.visited],
   [9, 2, 2724, day09.longerVisited],
   [10, 1, 11820, day10.sigStrength],
+  [10, 2, "EPJBRKAH", day10.letters],
 ])(
   "For day %p part %p. Expect %p.",
   (
