@@ -6,6 +6,7 @@ import * as day05 from "../src/05";
 import * as day06 from "../src/06";
 import * as day07 from "../src/07";
 import * as day08 from "../src/08";
+import * as day09 from "../src/09";
 
 it.each([
   [1, 1, 72017, day01.theMost],
@@ -24,6 +25,7 @@ it.each([
   [7, 2, 272298, day07.sizeToDelete],
   [8, 1, 1816, day08.visible],
   [8, 2, 383520, day08.bestScene],
+  [9, 1, 6503, day09.visited],
 ])(
   "For day %p part %p. Expect %p.",
   (
