@@ -8,6 +8,7 @@ import * as day07 from "../src/07";
 import * as day08 from "../src/08";
 import * as day09 from "../src/09";
 import * as day10 from "../src/10";
+import * as day11 from "../src/11";
 
 it.each([
   [1, 1, 72017, day01.theMost],
@@ -30,6 +31,7 @@ it.each([
   [9, 2, 2724, day09.longerVisited],
   [10, 1, 11820, day10.sigStrength],
   [10, 2, "EPJBRKAH", day10.letters],
+  [11, 1, 121450, day11.business],
 ])(
   "For day %p part %p. Expect %p.",
   (
