@@ -1,102 +1,143 @@
 interface Monkey {
-  items: number[];
+  starting: number[];
   ops(val: number): number;
-  action(val: number): number;
-  inspections: number;
+  test: number;
+  trueTarget: number;
+  falseTarget: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EXAMPLE: Monkey[] = [
   {
-    items: [79, 98],
+    starting: [79, 98],
     ops: (val) => val * 19,
-    action: (val) => (val % 23 === 0 ? 2 : 3),
-    inspections: 0,
+    test: 23,
+    trueTarget: 2,
+    falseTarget: 3,
   },
   {
-    items: [54, 65, 75, 74],
+    starting: [54, 65, 75, 74],
     ops: (val) => val + 6,
-    action: (val) => (val % 19 === 0 ? 2 : 0),
-    inspections: 0,
+    test: 19,
+    trueTarget: 2,
+    falseTarget: 0,
   },
   {
-    items: [79, 60, 97],
+    starting: [79, 60, 97],
     ops: (val) => val * val,
-    action: (val) => (val % 13 === 0 ? 1 : 3),
-    inspections: 0,
+    test: 13,
+    trueTarget: 1,
+    falseTarget: 3,
   },
   {
-    items: [74],
+    starting: [74],
     ops: (val) => val + 3,
-    action: (val) => (val % 17 === 0 ? 0 : 1),
-    inspections: 0,
+    test: 17,
+    trueTarget: 0,
+    falseTarget: 1,
   },
 ];
 
 const INPUT: Monkey[] = [
   {
-    items: [57],
+    starting: [57],
     ops: (val) => val * 13,
-    action: (val) => (val % 11 === 0 ? 3 : 2),
-    inspections: 0,
+    test: 11,
+    trueTarget: 3,
+    falseTarget: 2,
   },
   {
-    items: [58, 93, 88, 81, 72, 73, 65],
+    starting: [58, 93, 88, 81, 72, 73, 65],
     ops: (val) => val + 2,
-    action: (val) => (val % 7 === 0 ? 6 : 7),
-    inspections: 0,
+    test: 7,
+    trueTarget: 6,
+    falseTarget: 7,
   },
   {
-    items: [65, 95],
+    starting: [65, 95],
     ops: (val) => val + 6,
-    action: (val) => (val % 13 === 0 ? 3 : 5),
-    inspections: 0,
+    test: 13,
+    trueTarget: 3,
+    falseTarget: 5,
   },
   {
-    items: [58, 80, 81, 83],
+    starting: [58, 80, 81, 83],
     ops: (val) => val * val,
-    action: (val) => (val % 5 === 0 ? 4 : 5),
-    inspections: 0,
+    test: 5,
+    trueTarget: 4,
+    falseTarget: 5,
   },
   {
-    items: [58, 89, 90, 96, 55],
+    starting: [58, 89, 90, 96, 55],
     ops: (val) => val + 3,
-    action: (val) => (val % 3 === 0 ? 1 : 7),
-    inspections: 0,
+    test: 3,
+    trueTarget: 1,
+    falseTarget: 7,
   },
   {
-    items: [66, 73, 87, 58, 62, 67],
+    starting: [66, 73, 87, 58, 62, 67],
     ops: (val) => val * 7,
-    action: (val) => (val % 17 === 0 ? 4 : 1),
-    inspections: 0,
+    test: 17,
+    trueTarget: 4,
+    falseTarget: 1,
   },
   {
-    items: [85, 55, 89],
+    starting: [85, 55, 89],
     ops: (val) => val + 4,
-    action: (val) => (val % 2 === 0 ? 2 : 0),
-    inspections: 0,
+    test: 2,
+    trueTarget: 2,
+    falseTarget: 0,
   },
   {
-    items: [73, 80, 54, 94, 90, 52, 69, 58],
+    starting: [73, 80, 54, 94, 90, 52, 69, 58],
     ops: (val) => val + 7,
-    action: (val) => (val % 19 === 0 ? 6 : 0),
-    inspections: 0,
+    test: 19,
+    trueTarget: 6,
+    falseTarget: 0,
   },
 ];
 
-const monkeys = INPUT;
-for (let i = 0; i < 20; i++) {
-  monkeys.forEach((monkey) => {
-    while (monkey.items.length > 0) {
-      monkey.inspections += 1;
-      const item = monkey.items.shift();
-      const level = Math.floor(monkey.ops(item!) / 3);
-      monkeys[monkey.action(level)].items.push(level);
-    }
-  });
-}
+const input = INPUT;
 
-const inspections = monkeys.map((monkey) => monkey.inspections);
-const topTwo = inspections.sort((a, b) => b - a).slice(0, 2);
-export const business = topTwo.reduce((total, val) => total * val, 1);
-console.log(`Day 11 Part 2: The monkey business level is ${business}`);
+const calcBusiness = (
+  data: Monkey[],
+  rounds: number,
+  adjust: (level: number) => number
+): number => {
+  const monkeys = data.map((entry) => ({
+    ...entry,
+    items: [...entry.starting],
+    inspections: 0,
+  }));
+
+  for (let i = 0; i < rounds; i++) {
+    monkeys.forEach((monkey) => {
+      while (monkey.items.length > 0) {
+        monkey.inspections += 1;
+        const item = monkey.items.shift();
+        const level = adjust(monkey.ops(item!));
+        const target =
+          level % monkey.test === 0 ? monkey.trueTarget : monkey.falseTarget;
+        monkeys[target].items.push(level);
+      }
+    });
+  }
+  const inspections = monkeys.map((monkey) => monkey.inspections);
+  const topTwo = inspections.sort((a, b) => b - a).slice(0, 2);
+  return topTwo.reduce((total, val) => total * val, 1);
+};
+
+export const business = calcBusiness(input, 20, (level) =>
+  Math.floor(level / 3)
+);
+console.log(`Day 11 Part 1: The monkey business level is ${business}`);
+
+const levelMod = input
+  .map((monkey) => monkey.test)
+  .reduce((total, test) => total * test, 1);
+export const bigBusiness = calcBusiness(
+  input,
+  10000,
+  (level) => level % levelMod
+);
+console.log(`Day 11 part 2: The big monkey business level is ${bigBusiness}`);

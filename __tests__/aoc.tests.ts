@@ -32,6 +32,7 @@ it.each([
   [10, 1, 11820, day10.sigStrength],
   [10, 2, "EPJBRKAH", day10.letters],
   [11, 1, 121450, day11.business],
+  [11, 2, 28244037010, day11.bigBusiness],
 ])(
   "For day %p part %p. Expect %p.",
   (
@@ -40,6 +41,6 @@ it.each([
     answer: number | string,
     actual: number | string
   ) => {
-    expect(answer).toEqual(actual);
+    expect(actual).toEqual(answer);
   }
 );
